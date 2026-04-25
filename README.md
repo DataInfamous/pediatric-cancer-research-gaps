@@ -94,9 +94,11 @@ Trials.* GitHub. https://github.com/DataInfamous/pediatric-cancer-research-gaps
 *Author: Benjamyn Wilson | [DataInfamous](https://github.com/DataInfamous)*
 
 pediatric-cancer-research-gaps/
+
 ├── README.md
+
 ├── pediatric_research_gap_analysis.ipynb
-├── pediatric_research_gap_results.csv
+ ├── pediatric_research_gap_results.csv
 └── images/
     ├── scatter_plots.png
     └── bubble_chart.png
