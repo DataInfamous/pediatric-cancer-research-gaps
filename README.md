@@ -8,14 +8,17 @@ trial stall rates, or does stall rate primarily reflect disease incidence?
 
 **Finding:**  
 Diseases with higher non-recurrence mortality show lower trial stall rates 
-(rho=-0.697, p=0.025). The incidence correlation from raw stalled trial 
-counts does not survive normalization — confirming it was denominator-driven, 
-not a signal of research misalignment. The burden index correlation also did 
-not survive normalization (rho=-0.406, p=0.244).
+(rho=-0.806, p=0.005). This finding held and strengthened after normalizing 
+stalled trial counts by total trials per disease. The incidence correlation 
+did not survive normalization (rho=+0.273, p=0.446), confirming the raw 
+count signal was denominator-driven. The burden index correlation was 
+borderline (rho=-0.624, p=0.054).
 
-The one finding that holds: diseases where survivors are more likely to die 
+The finding that holds: diseases where survivors are more likely to die 
 from treatment consequences than recurrence tend to have lower trial stall 
-rates. This is a narrow but reproducible signal in a small dataset.
+rates. This is a narrow but reproducible signal — diseases carrying the 
+highest late-effects mortality burden are not seeing proportionally more 
+trial activity fail.
 
 ---
 
@@ -31,24 +34,28 @@ rates. This is a narrow but reproducible signal in a small dataset.
 
 ## Key Results
 
-| Cancer Type | Incidence (per M) | Non-Recurrence Mortality (%) | Stalled Trials | Burden Index |
-|-------------|-------------------|------------------------------|----------------|--------------|
-| Ewing Sarcoma | 3.0 | 30.8 | 7 | 10.3 |
-| Osteosarcoma | 5.1 | 40.1 | 9 | 7.9 |
-| Wilms Tumor | 6.2 | 32.0 | 3 | 5.2 |
-| Hodgkin Lymphoma | 12.2 | 58.4 | 9 | 4.8 |
-| ALL | 33.8 | 28.0 | 89 | 0.8 |
-| CNS | 31.3 | 21.8 | 86 | 0.7 |
+| Cancer Type | Incidence (per M) | Non-Recurrence Mortality (%) | Total Trials | Stalled Trials | Stall Rate | Burden Index |
+|-------------|-------------------|------------------------------|--------------|----------------|------------|--------------|
+| Ewing Sarcoma | 3.0 | 30.8 | 158 | 7 | 4.4% | 10.3 |
+| Osteosarcoma | 5.1 | 40.1 | 204 | 9 | 4.4% | 7.9 |
+| Wilms Tumor | 6.2 | 32.0 | 101 | 3 | 3.0% | 5.2 |
+| Hodgkin Lymphoma | 12.2 | 58.4 | 343 | 9 | 2.6% | 4.8 |
+| AML | 8.1 | 35.8 | 607 | 26 | 4.3% | 4.4 |
+| NHL | 11.9 | 43.5 | 322 | 13 | 4.0% | 3.7 |
+| Neuroblastoma | 8.5 | 26.4 | 279 | 29 | 10.4% | 3.1 |
+| STS | 12.0 | 34.0 | 178 | 14 | 7.9% | 2.8 |
+| ALL | 33.8 | 28.0 | 1260 | 89 | 7.1% | 0.8 |
+| CNS | 31.3 | 21.8 | 777 | 86 | 11.1% | 0.7 |
 
 *Burden Index = non-recurrence mortality % / incidence rate*
 
-**Stall Rate Correlations (stalled / total trials per disease):**
+**Stall Rate Correlations:**
 
 | Comparison | Spearman rho | p-value | Significant |
 |------------|--------------|---------|-------------|
-| Incidence vs stall rate | +0.164 | 0.651 | No |
-| Non-recurrence mortality vs stall rate | -0.697 | 0.025 | Yes |
-| Burden index vs stall rate | -0.406 | 0.244 | No |
+| Incidence vs stall rate | +0.273 | 0.446 | No |
+| Non-recurrence mortality vs stall rate | -0.806 | 0.005 | Yes |
+| Burden index vs stall rate | -0.624 | 0.054 | Borderline |
 
 ---
 
@@ -57,8 +64,8 @@ rates. This is a narrow but reproducible signal in a small dataset.
 ![Scatter Plots](images/scatter_plots.png)
 ![Bubble Chart](images/bubble_chart.png)
 
-*Note: Visualizations reflect raw stalled trial counts, not stall rates. 
-Updated visualizations pending condition-tag categorization.*
+*Note: Visualizations reflect raw stalled trial counts. Updated 
+visualizations using stall rate pending condition-tag categorization.*
 
 ---
 
@@ -67,14 +74,16 @@ Updated visualizations pending condition-tag categorization.*
 Three-variable correlation analysis using Spearman rank correlation (n=10 
 disease categories). Stalled trials categorized from title keywords; 66% 
 of 950 trials could not be categorized and are excluded. Total trial counts 
-per disease retrieved from ClinicalTrials.gov API v2 to calculate stall 
-rates. Analysis conducted with AI assistance (Claude, Anthropic).
+per disease retrieved from ClinicalTrials.gov search (April 2026) to 
+calculate stall rates. Analysis conducted with AI assistance (Claude, 
+Anthropic).
 
 **Limitations:**
 - Title-keyword categorization excludes 66% of trials; condition tag API 
   query would improve accuracy and is the primary next step
-- Initial raw-count correlations were denominator-driven and do not reflect 
-  genuine research misalignment — stall rate is the appropriate metric
+- Total trial counts retrieved via ClinicalTrials.gov search terms, not 
+  condition tags — counts may include trials outside pediatric oncology 
+  scope
 - CCSS aggregate tables only; individual-level data requires AOI submission
 - n=10 categories is small for correlation analysis; results should be 
   interpreted cautiously
@@ -91,32 +100,10 @@ rates. Analysis conducted with AI assistance (Claude, Anthropic).
 - Rebuild visualizations using stall rate rather than raw counts
 - Assess whether non-recurrence mortality signal strengthens with improved 
   categorization
+- Assess burden index correlation at p=0.054 with larger categorized sample
 
 ---
 
 ## Related Work
 
-The stalled trial counts used here are derived from 
-[pediatric-cancer-stalled-trials](https://github.com/DataInfamous/pediatric-cancer-stalled-trials), 
-which characterizes 950 terminated, withdrawn, and suspended pediatric 
-cancer trials across 89 countries — including geographic distribution, 
-sponsor type, and reason for stopping.
-
----
-
-## Citation
-
-Wilson, B. (2026). *Pediatric Cancer Research Gap Analysis: CDC WONDER 
-Incidence × CCSS Late-Effects Mortality × ClinicalTrials.gov Stalled 
-Trials.* GitHub. https://github.com/DataInfamous/pediatric-cancer-research-gaps
-
-**Data Sources:**
-- United States Cancer Statistics - Incidence: 1999–2022, WONDER Online 
-  Database. CDC/NCI; 2025 release.
-- Childhood Cancer Survivor Study (CCSS). St. Jude Children's Research 
-  Hospital. Jan 2020 data freeze, NDI through 12/31/2017.
-- ClinicalTrials.gov API v2. U.S. National Library of Medicine.
-
----
-
-*Author: Benjamyn Wilson | [DataInfamous](https://github.com/DataInfamous)*
+The stalled trial counts​​​​​​​​​​​​​​​​
