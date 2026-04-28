@@ -1,203 +1,142 @@
 # Pediatric Cancer Research Gap Analysis
 
-### Does trial stall rate align with survivor harm?
+### Do clinical trials align with survivor harm?
 
 ---
 
 ## Executive Summary
 
-This analysis examines whether pediatric cancer research activity aligns with survivor harm.
+This project investigates whether pediatric cancer research activity aligns with survivor harm.
 
-Initial results suggest a strong inverse relationship between late-effects burden and trial stall rates. However, deeper inspection shows that trial activity is primarily driven by disease incidence rather than long-term survivor outcomes.
+An initial analysis suggested a strong relationship between late-effects burden and trial outcomes. However, when the analysis was expanded using a larger dataset and improved methodology, this relationship disappeared.
 
-High-burden, low-incidence cancers appear systematically underrepresented in clinical research activity.
-
----
-
-## Overview
-
-This analysis explores whether clinical trial stall rates in pediatric oncology align with disease burden, specifically late-effects mortality among survivors.
-
-The goal is to test whether research outcomes reflect underlying clinical need, or whether observed patterns are driven by disease incidence and dataset structure.
-
-This work represents an **early-stage, hypothesis-generating analysis** using a partially categorized dataset of stalled trials.
+> The key finding: apparent alignment between research activity and disease burden can emerge in partial datasets but does not persist at system scale.
 
 ---
 
-## Research Question
+## Core Insight
 
-Do pediatric cancer diseases with higher late-effects burden show higher trial stall rates, or does stall rate primarily reflect disease incidence?
+This project demonstrates:
 
----
+```text
+Initial signal → disappears under improved methodology
+```
 
-## Preliminary Finding
+* Early result: **ρ = -0.806 (p = 0.005)**
+* Full dataset: **ρ = 0.18 (p = 0.67)**
 
-An initial analysis identified a strong negative correlation between non-recurrence mortality and trial stall rates:
-
-* **ρ = -0.806**
-* **p = 0.005**
-
-Additional findings:
-
-* Incidence vs stall rate: **ρ = +0.273, p = 0.446** (not significant)
-* Burden index vs stall rate: **ρ = -0.624, p = 0.054** (borderline)
-
-After normalization, the mortality signal remained while the incidence signal disappeared, indicating denominator-driven effects in raw counts.
-
----
-
-## Interpretation (Refined)
-
-While the initial interpretation suggested alignment between research persistence and disease severity, further inspection indicates a different structure:
-
-> Research activity is primarily driven by disease incidence, not by survivor harm.
-
-High-incidence diseases (e.g., ALL, CNS) dominate trial counts, while high-burden, low-incidence diseases (e.g., Ewing sarcoma, osteosarcoma) receive comparatively limited research activity.
+This shift reveals that the original finding was driven by dataset limitations rather than a true system-level relationship.
 
 ---
 
 ## Visual Analysis
 
-### Figure 1 — Incidence vs Stalled Trials and Burden vs Stalled Trials
+### Figure 1 — Incidence vs Research Activity
 
 ![Scatter Plots](images/scatter_plots.png)
 
-* **Left:** Stalled trials increase with incidence (**ρ = +0.711, p = 0.021**)
-* **Right:** Stalled trials decrease with increasing burden (**ρ = -0.881, p = 0.001**)
+* Strong positive relationship between incidence and trial counts
+* **ρ = +0.711 (p = 0.021)**
 
-These results indicate that research activity scales with how common a disease is rather than with long-term survivor harm.
+👉 Research scales with how common a disease is
 
 ---
 
-### Figure 2 — Research Gap Visualization
+### Figure 2 — Burden vs Research Activity
 
 ![Bubble Chart](images/bubble_chart.png)
 
-Bubble size represents stalled trial count.
+* Strong negative relationship between burden and trial counts
+* **ρ = -0.881 (p = 0.001)**
 
-* X-axis: Late-effects burden index
-* Y-axis: Incidence rate
-
-Key pattern:
-
-* **Top-left (ALL, CNS):** High incidence, low burden → large research footprint
-* **Bottom-right (Ewing, Osteosarcoma):** High burden, low incidence → limited research activity
-
-> High-burden diseases are underrepresented relative to their clinical impact.
+👉 High-burden diseases appear underrepresented in this dataset
 
 ---
 
-## Critical Context
+### Figure 3 — Signal Collapse Under Improved Methodology
 
-This finding was derived from a **limited and partially categorized dataset**:
+![Signal Collapse](images/signal_collapse.png)
 
-* ~950 stalled trials
-* ~34% successfully categorized using title keywords
-* Remaining ~66% excluded from disease-level analysis
+| Analysis                          | Result                 |
+| --------------------------------- | ---------------------- |
+| Partial dataset (keyword mapping) | ρ = -0.806 (p = 0.005) |
+| Full dataset (structured mapping) | ρ = 0.18 (p = 0.67)    |
 
-This reflects patterns within **classifiable trials**, not the full system.
-
----
-
-## Data Sources
-
-| Source                | Description                                    | Coverage                 |
-| --------------------- | ---------------------------------------------- | ------------------------ |
-| CDC WONDER            | Age-adjusted incidence rates per million       | 1999–2022                |
-| CCSS Mortality Tables | Non-recurrence cause-of-death % by cancer type | St. Jude Jan 2020 freeze |
-| ClinicalTrials.gov    | ~950 stalled pediatric cancer trials           | 1995–present             |
+This demonstrates that the initial signal does not hold when the full system is analyzed.
 
 ---
 
-## Key Results
+## Interpretation
 
-| Cancer Type   | Incidence | Non-Recurrence Mortality | Total Trials | Stalled Trials | Stall Rate | Burden Index |
-| ------------- | --------- | ------------------------ | ------------ | -------------- | ---------- | ------------ |
-| Ewing         | 3.0       | 30.8                     | 158          | 7              | 4.4%       | 10.3         |
-| Osteosarcoma  | 5.1       | 40.1                     | 204          | 9              | 4.4%       | 7.9          |
-| Wilms         | 6.2       | 32.0                     | 101          | 3              | 3.0%       | 5.2          |
-| Hodgkin       | 12.2      | 58.4                     | 343          | 9              | 2.6%       | 4.8          |
-| AML           | 8.1       | 35.8                     | 607          | 26             | 4.3%       | 4.4          |
-| NHL           | 11.9      | 43.5                     | 322          | 13             | 4.0%       | 3.7          |
-| Neuroblastoma | 8.5       | 26.4                     | 279          | 29             | 10.4%      | 3.1          |
-| STS           | 12.0      | 34.0                     | 178          | 14             | 7.9%       | 2.8          |
-| ALL           | 33.8      | 28.0                     | 1260         | 89             | 7.1%       | 0.8          |
-| CNS           | 31.3      | 21.8                     | 777          | 86             | 11.1%      | 0.7          |
+The initial analysis suggested that diseases with higher survivor harm had lower trial failure rates.
+
+However, deeper analysis shows:
+
+* Research activity is primarily driven by **incidence**
+* Survivor burden does **not consistently influence research activity**
+* Apparent patterns can emerge from **incomplete or biased datasets**
+
+> This highlights how misleading conclusions can arise without full data coverage and proper classification.
 
 ---
 
-## Correlation Results
+## Relationship to Source Repository
 
-| Comparison                 | Spearman rho | p-value | Significant |
-| -------------------------- | ------------ | ------- | ----------- |
-| Incidence vs stall rate    | +0.273       | 0.446   | No          |
-| Mortality vs stall rate    | -0.806       | 0.005   | Yes         |
-| Burden index vs stall rate | -0.624       | 0.054   | Borderline  |
+This project builds on:
+
+**Where Pediatric Cancer Trials Stall**
+https://github.com/DataInfamous/pediatric-cancer-stalled-trials
+
+* Source repo: system-level analysis of trial discontinuation
+* This repo: evaluates whether those patterns align with disease burden
 
 ---
 
 ## Methods
 
-* Spearman correlation across **n = 10 disease groups**
-* Stalled trials identified via ClinicalTrials.gov
-* Disease classification via **title keyword matching**
-* Total trial counts retrieved via search queries
+* Spearman correlation across disease groups
+* ClinicalTrials.gov stalled trial dataset (~950 trials)
+* Disease classification via keyword matching (initial analysis)
+* Expanded analysis using structured condition mapping (~15k trials)
 
-**Note:**
-Stalled trial counts are used as a proxy for research activity due to consistent availability across disease categories.
+**Important Note:**
+Stalled trial counts are used as a proxy for research activity due to consistent availability, but they do not represent total trial volume.
 
 ---
 
 ## Limitations
 
-* ~66% of trials excluded due to classification limitations
+* Initial analysis categorized ~34% of trials
 * Keyword-based disease mapping introduces bias
-* Total trial counts not derived from structured condition tags
-* Small sample size (n=10)
+* Total trial counts derived from search queries
+* Small sample size (n=10 disease categories)
 * Temporal mismatch across datasets
-* Visualizations based on stalled counts, not full trial dataset
+* Observational data cannot establish causation
 
 ---
 
-## Relationship to Updated Analysis
+## Final Conclusion
 
-A later full-pipeline analysis using:
+This analysis shows:
 
-* ~15,000 trials
-* structured condition mapping
-* consistent denominators
-* temporal controls
+```text
+Research systems do not appear to be optimized around survivor harm
+```
 
-found:
+More importantly, it demonstrates:
 
-* **ρ = 0.18, p = 0.67**
-
-This indicates that the strong negative correlation observed here does **not persist at system scale**.
-
----
-
-## Final Interpretation
-
-This analysis identifies a **potential signal**, but later work suggests:
-
-> Apparent alignment between research activity and disease burden may emerge in partial datasets but does not hold when the full clinical trial system is analyzed.
+```text
+Methodology determines conclusions
+```
 
 ---
 
 ## Future Work
 
-* Re-run using ClinicalTrials.gov API condition tags
-* Recover excluded trials
-* Recalculate using full dataset
-* Expand disease subtype mapping
-* Validate burden relationship at scale
-
----
-
-## Related Work
-
-**Where Pediatric Cancer Trials Stall**
-https://github.com/DataInfamous/pediatric-cancer-stalled-trials
+* Re-run using full API-based condition mapping
+* Incorporate total trial counts (not just stalled trials)
+* Expand disease subtype resolution
+* Integrate funding-level data
 
 ---
 
