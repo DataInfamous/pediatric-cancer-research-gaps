@@ -104,9 +104,19 @@ https://github.com/DataInfamous/pediatric-cancer-stalled-trials
 
 ## Limitations
 
-- Age filtering is based on eligibility categories, not numeric age limits — the dataset reflects pediatric-eligible trials, not pediatric-only trials
-- Initial analysis categorized ~34% of trials; expanded analysis increases coverage but 75% of trials still map to “other”
-- Keyword-based disease mapping introduces classification bias
+- Age filtering is based on eligibility categories, not numeric age limits — 
+  the dataset reflects pediatric-eligible trials, not pediatric-only trials
+- Approximately 75% of trials do not map cleanly to predefined pediatric 
+  oncology subtypes using keyword-based classification and are categorized 
+  as "other." These trials are retained for system-level analyses but 
+  excluded from disease-level correlation analysis to avoid misclassification 
+  bias. Disease-level conclusions are based on a subset of trials with 
+  high-confidence classification rather than the full dataset.
+- The proportion of uncategorized trials (~75%) reflects the heterogeneity 
+  of trial descriptions in registry data and highlights the limitations of 
+  free-text condition labeling — not missing data
+- Keyword-based disease mapping introduces classification bias; future 
+  analysis will use API condition tags for improved coverage
 - Stalled trials are a proxy for research activity, not a direct measure
 - Small sample size at subtype level (n = 8–10 disease categories)
 - Temporal mismatch across datasets
