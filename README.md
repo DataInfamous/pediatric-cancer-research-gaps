@@ -31,6 +31,8 @@ This shift reveals that the original finding was driven by aggregation bias — 
 
 ## Visual Analysis
 
+> **Note on Figures 1 and 2:** These results are from the initial partial-dataset analysis using aggregated disease categories. They are presented to document the original signal, not as final conclusions. Figure 3 shows what happens when the analysis is expanded and disease categories are properly disaggregated.
+
 ### Figure 1 — Incidence vs Research Activity
 
 ![Scatter Plots](images/scatter_plots.png)
@@ -38,7 +40,7 @@ This shift reveals that the original finding was driven by aggregation bias — 
 - Strong positive relationship between incidence and trial counts
 - **ρ = +0.711 (p = 0.021)**
 
-Research activity scales with disease incidence.
+Research activity scales with disease incidence. *Partial-dataset result; see Figure 3.*
 
 -----
 
@@ -49,7 +51,7 @@ Research activity scales with disease incidence.
 - Strong negative relationship between burden and trial counts
 - **ρ = -0.881 (p = 0.001)**
 
-High-burden diseases appear underrepresented in this dataset.
+High-burden diseases appear underrepresented in this dataset. *Partial-dataset result; see Figure 3.*
 
 -----
 
@@ -62,7 +64,7 @@ High-burden diseases appear underrepresented in this dataset.
 |Aggregated categories |ρ = -0.806 (p = 0.005)|
 |Disaggregated subtypes|ρ = 0.18 (p = 0.67)   |
 
-The initial signal does not persist when disease categories are disaggregated into clinically meaningful subtypes.
+The initial signal does not persist when disease categories are disaggregated into clinically meaningful subtypes. This is the primary result of the analysis.
 
 -----
 
@@ -104,19 +106,11 @@ https://github.com/DataInfamous/pediatric-cancer-stalled-trials
 
 ## Limitations
 
-- Age filtering is based on eligibility categories, not numeric age limits — 
-  the dataset reflects pediatric-eligible trials, not pediatric-only trials
-- Approximately 75% of trials do not map cleanly to predefined pediatric 
-  oncology subtypes using keyword-based classification and are categorized 
-  as "other." These trials are retained for system-level analyses but 
-  excluded from disease-level correlation analysis to avoid misclassification 
-  bias. Disease-level conclusions are based on a subset of trials with 
-  high-confidence classification rather than the full dataset.
-- The proportion of uncategorized trials (~75%) reflects the heterogeneity 
-  of trial descriptions in registry data and highlights the limitations of 
-  free-text condition labeling — not missing data
-- Keyword-based disease mapping introduces classification bias; future 
-  analysis will use API condition tags for improved coverage
+- Age filtering is based on eligibility categories, not numeric age limits — the dataset reflects pediatric-eligible trials, not pediatric-only trials
+- Approximately 75% of trials do not map cleanly to predefined pediatric oncology subtypes using keyword-based classification and are categorized as “other.” These trials are retained for system-level analyses but excluded from disease-level correlation analysis to avoid misclassification bias. Disease-level conclusions are based on a subset of trials with high-confidence classification rather than the full dataset.
+- The proportion of uncategorized trials (~75%) reflects the heterogeneity of trial descriptions in registry data and highlights the limitations of free-text condition labeling — not missing data
+- Figures 1 and 2 reflect the partial-dataset analysis and are superseded by the full-dataset result in Figure 3; they are retained to document the original signal and the methodological correction
+- Keyword-based disease mapping introduces classification bias; future analysis will use API condition tags for improved coverage
 - Stalled trials are a proxy for research activity, not a direct measure
 - Small sample size at subtype level (n = 8–10 disease categories)
 - Temporal mismatch across datasets
